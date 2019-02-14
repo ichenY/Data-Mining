@@ -1,8 +1,6 @@
 import java.io.{File, PrintWriter}
-
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
-
 import scala.collection.mutable.ListBuffer
 
 object Son {
@@ -10,8 +8,6 @@ object Son {
     val sparkConf = new SparkConf().setAppName("hw2").setMaster("local[3]")
     val sc = new SparkContext(sparkConf)
     val csv = sc.textFile("./data/small1.csv")
-    // val : can't change the value.
-    // var : changeable
     val support = 3
     val header = csv.first()
     val rawData = csv.filter(x=>x!=header).map(x=>x.split(",")).map(x=>(x(0),x(1))).distinct().groupByKey().map(x=>(x._1,x._2.toList))
